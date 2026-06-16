@@ -70,20 +70,31 @@ const DATA = {
     ['Dispatch to Delivery FMS','Dispatch and delivery workflow monitoring','https://docs.google.com/spreadsheets/d/171_8pxTY2inG933cMk2GmQKSihBqv3BIPZhpWoIn9JA/edit?gid=0#gid=0','⇄']
   ],
 
-  admin: [
-    ['Field Service Support','Support ticket system hosted page','https://mis-darpan.github.io/litpax-support-ticket-system/','⚙'],
-    ['Repair Web Form','Repair form hosted page','https://mis-darpan.github.io/repairformlitpax/','⚙'],
-    ['Service Calls Web Form','Service calls hosted page','https://mis-darpan.github.io/ServiceCallsWebForm/','⚙']
-  ],
-
   charts: {
-    payments: [
-      ['Expense Breakdown by Purpose','https://docs.google.com/spreadsheets/d/e/2PACX-1vRd5S-T41DFVGj92I-_lWEVt2c1AoaGXgwgPFCahCWfJXPVVa6U0LMXdrvi8LDvfrVqARPr6SLGQM8h/pubchart?oid=1728129396&format=interactive'],
-      ['Advance vs Total Expense','https://docs.google.com/spreadsheets/d/e/2PACX-1vRd5S-T41DFVGj92I-_lWEVt2c1AoaGXgwgPFCahCWfJXPVVa6U0LMXdrvi8LDvfrVqARPr6SLGQM8h/pubchart?oid=783735950&format=interactive'],
-      ['Total Advance Given','https://docs.google.com/spreadsheets/d/e/2PACX-1vSNwFRHRqRgUjlzmx_nd6OAvNGcnEbNNSozpnXmjsps5dBrJab1XrRbXl_zt_BVNOAOGRQpKpduNl1w/pubchart?oid=2134041976&format=interactive'],
-      ['Employee Wise Advance','https://docs.google.com/spreadsheets/d/e/2PACX-1vSNwFRHRqRgUjlzmx_nd6OAvNGcnEbNNSozpnXmjsps5dBrJab1XrRbXl_zt_BVNOAOGRQpKpduNl1w/pubchart?oid=1177165219&format=interactive'],
-      ['Raw Material Advance Given vs Expense','https://docs.google.com/spreadsheets/d/e/2PACX-1vQpK_KBwbGg9Vsmo3VUa8Abn1Jyu1L6YRtlX8mriIRGWzgrVjIZl8-EnUgFoW_IuIWw64QQDZfm6PsS/pubchart?oid=1953461556&format=interactive']
-    ],
+    payments: {
+      groups: [
+        {
+          label: 'Petty Payments',
+          charts: [
+            ['Expense Breakdown by Purpose','https://docs.google.com/spreadsheets/d/e/2PACX-1vRd5S-T41DFVGj92I-_lWEVt2c1AoaGXgwgPFCahCWfJXPVVa6U0LMXdrvi8LDvfrVqARPr6SLGQM8h/pubchart?oid=1728129396&format=interactive'],
+            ['Advance vs Total Expense','https://docs.google.com/spreadsheets/d/e/2PACX-1vRd5S-T41DFVGj92I-_lWEVt2c1AoaGXgwgPFCahCWfJXPVVa6U0LMXdrvi8LDvfrVqARPr6SLGQM8h/pubchart?oid=783735950&format=interactive']
+          ]
+        },
+        {
+          label: 'Employee Advance',
+          charts: [
+            ['Total Advance Given','https://docs.google.com/spreadsheets/d/e/2PACX-1vSNwFRHRqRgUjlzmx_nd6OAvNGcnEbNNSozpnXmjsps5dBrJab1XrRbXl_zt_BVNOAOGRQpKpduNl1w/pubchart?oid=2134041976&format=interactive'],
+            ['Employee Wise Advance','https://docs.google.com/spreadsheets/d/e/2PACX-1vSNwFRHRqRgUjlzmx_nd6OAvNGcnEbNNSozpnXmjsps5dBrJab1XrRbXl_zt_BVNOAOGRQpKpduNl1w/pubchart?oid=1177165219&format=interactive']
+          ]
+        },
+        {
+          label: 'Raw Material Advance',
+          charts: [
+            ['Raw Material Advance Given vs Expense','https://docs.google.com/spreadsheets/d/e/2PACX-1vQpK_KBwbGg9Vsmo3VUa8Abn1Jyu1L6YRtlX8mriIRGWzgrVjIZl8-EnUgFoW_IuIWw64QQDZfm6PsS/pubchart?oid=1953461556&format=interactive']
+          ]
+        }
+      ]
+    },
 
     courier: [
       ['Last 3 Days — Courier In vs Out','https://docs.google.com/spreadsheets/d/e/2PACX-1vTag9IkTVRF7_9yEo2cdPwhxvbrIToJtbIO6Y-yk_YsCCgao4Hf1Wlw9GJZfoGY0rCPz5mXH79I1F85/pubchart?oid=1866253700&format=interactive'],
@@ -160,47 +171,44 @@ function chartCard(item){
   `;
 }
 
+function paymentsGroupedHTML(){
+  return DATA.charts.payments.groups.map(group => `
+    <div class="group-block">
+      <h3>${group.label}</h3>
+      <div class="chart-grid">
+        ${group.charts.map(chartCard).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
 function render(){
   setHTML('formsGrid', DATA.forms.map(toolCard).join(''));
   setHTML('webFormsGrid', DATA.webForms.map(featureCard).join(''));
-
   setHTML('mainSheetsGrid', DATA.mainSheets.map(toolCard).join(''));
   setHTML('orderSheetsGrid', DATA.orderSheets.map(toolCard).join(''));
-
   setHTML('responsesGrid', DATA.responses.map(toolCard).join(''));
-
   setHTML('imsGrid', DATA.ims.map(featureCard).join(''));
   setHTML('checklistGrid', DATA.checklist.map(featureCard).join(''));
   setHTML('fmsGrid', DATA.fms.map(featureCard).join(''));
-  
 
-  setHTML('paymentsCharts', DATA.charts.payments.map(chartCard).join(''));
-  setHTML('courierCharts', DATA.charts.courier.map(chartCard).join(''));
-  setHTML('repairCharts', DATA.charts.repair.map(chartCard).join(''));
+  setHTML('paymentsCharts', paymentsGroupedHTML());
+  setHTML('courierCharts', `<div class="chart-grid">${DATA.charts.courier.map(chartCard).join('')}</div>`);
+  setHTML('repairCharts', `<div class="chart-grid">${DATA.charts.repair.map(chartCard).join('')}</div>`);
 }
 
 function showSection(name){
-  document.querySelectorAll('.section-panel').forEach(section => {
-    section.classList.remove('active');
-  });
-
-  document.querySelectorAll('.home-only').forEach(section => {
-    section.classList.remove('active');
-  });
+  document.querySelectorAll('.section-panel').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.home-only').forEach(s => s.classList.remove('active'));
 
   if(name === 'home'){
     document.getElementById('section-home')?.classList.add('active');
-    document.querySelectorAll('.home-only').forEach(section => {
-      section.classList.add('active');
-    });
+    document.querySelectorAll('.home-only').forEach(s => s.classList.add('active'));
   } else {
     document.getElementById('section-' + name)?.classList.add('active');
   }
 
-  document.querySelectorAll('.nav-link').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
+  document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
   document.querySelector(`.nav-link[data-section="${name}"]`)?.classList.add('active');
 
   const title = document.getElementById('pageTitle');
@@ -211,7 +219,6 @@ function showSection(name){
 
   filterCards('');
   closeSidebar();
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -223,26 +230,17 @@ function filterCards(query){
   cards.forEach(card => {
     const text = (card.dataset.search || card.textContent).toLowerCase();
     const match = !q || text.includes(q);
-
     card.classList.toggle('hide-by-search', !match);
     if(match) visible++;
   });
 
   const noResults = document.getElementById('noResults');
-  if(noResults){
-    noResults.style.display = q && visible === 0 ? 'flex' : 'none';
-  }
+  if(noResults) noResults.style.display = q && visible === 0 ? 'flex' : 'none';
 }
 
 function showDash(name){
-  document.querySelectorAll('.dash-tab').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  document.querySelectorAll('.dash-panel').forEach(panel => {
-    panel.classList.remove('active');
-  });
-
+  document.querySelectorAll('.dash-tab').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.dash-panel').forEach(panel => panel.classList.remove('active'));
   document.querySelector(`.dash-tab[data-dash="${name}"]`)?.classList.add('active');
   document.getElementById('dash-' + name)?.classList.add('active');
 }
@@ -261,27 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
   render();
 
   document.querySelectorAll('.nav-link').forEach(btn => {
-    btn.addEventListener('click', () => {
-      showSection(btn.dataset.section);
-    });
+    btn.addEventListener('click', () => showSection(btn.dataset.section));
   });
 
   document.querySelectorAll('[data-section-jump]').forEach(el => {
-    el.addEventListener('click', () => {
-      showSection(el.dataset.sectionJump);
-    });
+    el.addEventListener('click', () => showSection(el.dataset.sectionJump));
   });
 
   document.querySelectorAll('.dash-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      showDash(btn.dataset.dash);
-    });
+    btn.addEventListener('click', () => showDash(btn.dataset.dash));
   });
 
-  document.getElementById('portalSearch')?.addEventListener('input', e => {
-    filterCards(e.target.value);
-  });
-
+  document.getElementById('portalSearch')?.addEventListener('input', e => filterCards(e.target.value));
   document.getElementById('menuBtn')?.addEventListener('click', toggleSidebar);
   document.getElementById('overlay')?.addEventListener('click', closeSidebar);
 });
