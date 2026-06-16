@@ -464,14 +464,13 @@ button,input { font-family:inherit; }
 /* ─── CHART CARDS ────────────────────────────────── */
 .chart-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(380px,100%),1fr)); gap: 16px; }
 
-.chart-card { border: 1px solid var(--line); border-radius: var(--r-xl); overflow: hidden; background: var(--card); box-shadow: var(--sh-1); transition: .16s; display: flex; flex-direction: column; }
+.chart-card { border: 1px solid var(--line); border-radius: var(--r-xl); overflow: hidden; background: var(--card); box-shadow: var(--sh-1); transition: .16s; }
 .chart-card:hover { box-shadow: var(--sh-3); transform: translateY(-2px); }
 
 .chart-head {
   height: 48px; padding: 0 16px; background: var(--card);
   border-bottom: 1px solid var(--line);
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  flex-shrink: 0;
 }
 .chart-head h4 { font-size: 13px; font-weight: 700; color: var(--tx); }
 .chart-dot {
@@ -479,8 +478,8 @@ button,input { font-family:inherit; }
   background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.18);
   animation: dotPulse 2.4s ease infinite; flex-shrink: 0;
 }
-.chart-wrap { position: relative; width: 100%; height: 420px; overflow: hidden; flex: 1; }
-.chart-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.chart-wrap { width: 100%; height: 420px; overflow: hidden; }
+.chart-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 /* ─── LEADS LAUNCHER ─────────────────────────────── */
 .leads-launcher {
