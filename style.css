@@ -490,7 +490,14 @@ button,input { font-family:inherit; }
   animation: dotPulse 2.4s ease infinite; flex-shrink: 0;
 }
 .chart-wrap { width: 100%; height: 480px; overflow: hidden; }
-.chart-wrap iframe { width: 100%; height: calc(100% + 60px); margin-top: -30px; border: 0; display: block; }
+.chart-wrap iframe {
+  width: 150%;
+  height: 150%;
+  border: 0;
+  display: block;
+  transform: scale(0.67);
+  transform-origin: top left;
+}
 
 /* ─── LEADS LAUNCHER ─────────────────────────────── */
 .leads-launcher {
