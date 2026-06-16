@@ -157,7 +157,8 @@ function featureCard(item){
 }
 
 function chartCard(item){
-  const [title,url] = item;
+  const [title, url] = item;
+  const sized = url + '&w=900&h=500';
   return `
     <div class="chart-card searchable" data-search="${title}">
       <div class="chart-head">
@@ -165,7 +166,7 @@ function chartCard(item){
         <span class="chart-dot"></span>
       </div>
       <div class="chart-wrap">
-        <iframe src="${url}" loading="lazy" scrolling="no"></iframe>
+        <iframe src="${sized}" loading="lazy" scrolling="no"></iframe>
       </div>
     </div>
   `;
