@@ -495,7 +495,7 @@ button,input { font-family:inherit; }
   height: 140%;
   border: 0;
   display: block;
-  transform: scale(0.53);
+  transform: scale(0.7);
   transform-origin: top left;
 }
 
