@@ -217,6 +217,7 @@ function render(){
   setHTML('imsGrid',         DATA.ims.map(featureCard).join(''));
   setHTML('checklistGrid',   DATA.checklist.map(featureCard).join(''));
   setHTML('fmsGrid',         DATA.fms.map(featureCard).join(''));
+  setHTML('erpGrid',         DATA.erp.map(featureCard).join(''));
 
   // Repair & Services
   setHTML('repairFormsGrid',     DATA.repairForms.map(featureCard).join(''));
