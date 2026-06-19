@@ -99,7 +99,8 @@ const DATA = {
     ['Repair Form Response','Response Sheet','https://docs.google.com/spreadsheets/d/1ythER3lvxeUS-ke6h_KC-1l8855sQQuiiZ4eQ2BzE5M/edit?gid=0#gid=0'],
     ['Service Calls Response','Response Sheet','https://docs.google.com/spreadsheets/d/1POqxaWq3v1nk0mZF0-e7KhKrHbX_AlMWqUewk17tm0s/edit?gid=2116141456#gid=2116141456'],
     ['Dealership Enquiry Web Form Response','Response Sheet','https://docs.google.com/spreadsheets/d/1y2v5qbvTc7Mnb7lgxRlKYdL8B0t1Mdsaw4j5dTGYGN4/edit?gid=819191422#gid=819191422'],
-    ['All Checklists with Points Response','Response Sheet','https://docs.google.com/spreadsheets/d/1NsBV465D1rfK-je-GH7AaEG3HEfNPE7vytHM1YiJK78/edit?gid=309174168#gid=309174168']
+    ['All Checklists with Points Response','Response Sheet','https://docs.google.com/spreadsheets/d/1NsBV465D1rfK-je-GH7AaEG3HEfNPE7vytHM1YiJK78/edit?gid=309174168#gid=309174168'],
+    ['Battery Exchange Tracker Response','Response Sheet','https://docs.google.com/spreadsheets/d/1-DUrqY-3BP9QH0BTzt45OPjBbeFR-WFGQWYz5jLkrCQ/edit?gid=1758123938#gid=1758123938']
   ],
 
   charts: {
