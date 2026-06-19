@@ -63,7 +63,8 @@ const DATA = {
   ],
 
   checklist: [
-    ['Master Checklist File','Open the main checklist file for daily checking and verification','https://docs.google.com/spreadsheets/d/1ayhBVTC269_vNNSAyiNYD-lAjbRj8xVKm9_AfoCYCkE/edit?gid=2092959791#gid=2092959791','☑']
+    ['Master Checklist File','Open the main checklist file for daily checking and verification','https://docs.google.com/spreadsheets/d/1ayhBVTC269_vNNSAyiNYD-lAjbRj8xVKm9_AfoCYCkE/edit?gid=2092959791#gid=2092959791','☑'],
+    ['All Checklists with Points','Complete checklist with scoring and points','https://mis-darpan.github.io/All-Checklists/','☑']
   ],
 
   fms: [
