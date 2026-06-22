@@ -1,4 +1,4 @@
-const GAS_QUERY_URL = 'https://script.google.com/macros/s/AKfycbwYJIxqDn7e6ejyQ1jGXSYb_hgTLGZFmoLsgzw4deI7u7Ow34GI6gxxJJlrNw8iruAg/exec';
+const GAS_QUERY_URL = 'https://script.google.com/macros/s/AKfycbxjbAFoTANTet3z2wgFFi0Obm9IjSH767jgnNcikxOytywSN1qxITZseWEykgI-8CS8/exec';
 
 const DATA = {
   forms: [
@@ -315,148 +315,195 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ─── STAFF QUERIES ───────────────────────────────
 
+let allTickets = [];
+let activeTicket = null;
+
 function renderQuerySection() {
   const wrap = document.getElementById('queryFormWrap');
   if (!wrap) return;
   wrap.innerHTML = `
-    <div style="background:var(--bg);border:1px solid var(--line);border-radius:var(--r-xl);padding:20px;max-width:600px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-        <div>
-          <label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Employee Name *</label>
-          <input id="qName" type="text" placeholder="Apna naam likhein" style="width:100%;padding:9px 12px;border:1px solid var(--line2);border-radius:var(--r-md);font-size:13px;font-family:inherit;outline:none;background:var(--card);">
+    <div style="display:flex;gap:16px;height:580px;">
+
+      <!-- LEFT: Ticket List -->
+      <div style="width:280px;flex-shrink:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--card);">
+        <div style="padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;font-weight:700;color:var(--tx);">All Queries</span>
+          <button onclick="loadAllTickets()" style="background:var(--acc);color:#fff;border:none;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">Refresh</button>
         </div>
-        <div>
-          <label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Department *</label>
-          <select id="qDept" style="width:100%;padding:9px 12px;border:1px solid var(--line2);border-radius:var(--r-md);font-size:13px;font-family:inherit;outline:none;background:var(--card);">
-            <option value="">Select Department</option>
-            <option>Store</option>
-            <option>Production</option>
-            <option>Dispatch</option>
-            <option>Sales</option>
-            <option>Repair</option>
-            <option>Accounts</option>
-            <option>Other</option>
+        <div style="padding:8px;border-bottom:1px solid var(--line);">
+          <select id="statusFilter" onchange="filterTickets()" style="width:100%;padding:6px 10px;border:1px solid var(--line2);border-radius:6px;font-size:11px;font-family:inherit;outline:none;background:var(--bg);">
+            <option value="">All Status</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
           </select>
         </div>
+        <div id="ticketListPane" style="flex:1;overflow-y:auto;"></div>
       </div>
-      <div style="margin-bottom:12px;">
-        <label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Priority *</label>
-        <div style="display:flex;gap:8px;">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:7px 14px;border:1px solid var(--line2);border-radius:var(--r-md);background:var(--card);">
-            <input type="radio" name="qPriority" value="Low"> Low
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:7px 14px;border:1px solid var(--line2);border-radius:var(--r-md);background:var(--card);">
-            <input type="radio" name="qPriority" value="Medium" checked> Medium
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:7px 14px;border:1px solid var(--line2);border-radius:var(--r-md);background:var(--card);color:#dc2626;border-color:#fecaca;">
-            <input type="radio" name="qPriority" value="Urgent"> 🔴 Urgent
-          </label>
+
+      <!-- RIGHT: Chat View -->
+      <div style="flex:1;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--card);">
+        <div id="chatHeader" style="padding:14px 18px;border-bottom:1px solid var(--line);background:var(--bg);">
+          <p style="font-size:12px;color:var(--muted);text-align:center;">← Query select karo</p>
+        </div>
+        <div id="chatBody" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;"></div>
+        <div id="chatFooter" style="border-top:1px solid var(--line);padding:12px;display:none;">
+          <textarea id="ownerReply" rows="2" placeholder="Response likho..." style="width:100%;padding:8px 12px;border:1px solid var(--line2);border-radius:8px;font-size:13px;font-family:inherit;outline:none;resize:none;background:var(--bg);"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <button onclick="sendResponse('temp')" style="background:#d97706;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">Send Temp Response</button>
+            <button onclick="sendResponse('final')" style="background:#16a34a;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">✓ Final Solution & Close</button>
+            <button onclick="changeStatus('In Progress')" style="background:var(--bg);color:var(--tx2);border:1px solid var(--line2);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">Mark In Progress</button>
+          </div>
         </div>
       </div>
-      <div style="margin-bottom:12px;">
-        <label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Subject *</label>
-        <input id="qSubject" type="text" placeholder="Query ka short title" style="width:100%;padding:9px 12px;border:1px solid var(--line2);border-radius:var(--r-md);font-size:13px;font-family:inherit;outline:none;background:var(--card);">
-      </div>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Description *</label>
-        <textarea id="qDesc" rows="4" placeholder="Poori detail likhein..." style="width:100%;padding:9px 12px;border:1px solid var(--line2);border-radius:var(--r-md);font-size:13px;font-family:inherit;outline:none;background:var(--card);resize:vertical;"></textarea>
-      </div>
-      <button onclick="submitQuery()" id="qSubmitBtn" style="background:var(--acc);color:#fff;border:none;padding:10px 24px;border-radius:var(--r-md);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">
-        Submit Query
-      </button>
-      <div id="qMsg" style="margin-top:12px;font-size:12.5px;font-weight:500;"></div>
+
     </div>
   `;
-  renderMyTickets();
+
+  // Hide the "My Queries" section — not needed for owner
+  const listWrap = document.getElementById('queryListWrap');
+  if (listWrap) listWrap.style.display = 'none';
+
+  loadAllTickets();
 }
 
-function renderMyTickets() {
-  const wrap = document.getElementById('queryListWrap');
-  if (!wrap) return;
-  const savedName = localStorage.getItem('qEmployeeName') || '';
-  wrap.innerHTML = `
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;max-width:400px;">
-      <input id="qNameFilter" type="text" value="${savedName}" placeholder="Apna naam likhein aur tickets dekho" style="flex:1;padding:9px 12px;border:1px solid var(--line2);border-radius:var(--r-md);font-size:13px;font-family:inherit;outline:none;background:var(--card);">
-      <button onclick="loadMyTickets()" style="background:var(--acc);color:#fff;border:none;padding:9px 16px;border-radius:var(--r-md);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Load</button>
-    </div>
-    <div id="ticketsList"></div>
-  `;
-  if (savedName) loadMyTickets();
-}
-
-async function loadMyTickets() {
-  const name = document.getElementById('qNameFilter')?.value.trim();
-  if (!name) return;
-  localStorage.setItem('qEmployeeName', name);
-  document.getElementById('ticketsList').innerHTML = '<p style="font-size:12px;color:var(--muted);">Loading...</p>';
+async function loadAllTickets() {
+  document.getElementById('ticketListPane').innerHTML = '<p style="font-size:11px;color:var(--muted);padding:12px;">Loading...</p>';
   try {
     const res = await fetch(GAS_QUERY_URL, {
       method: 'POST',
-      body: JSON.stringify({ action: 'getMyTickets', employeeName: name })
+      body: JSON.stringify({ action: 'getAllTickets' })
     });
     const data = await res.json();
-    if (!data.success || data.tickets.length === 0) {
-      document.getElementById('ticketsList').innerHTML = '<div class="empty-state"><h3>Koi ticket nahi mila</h3><p>Naam check karo ya pehle query submit karo.</p></div>';
-      return;
-    }
-    const statusColor = s => s==='Open'?'#dc2626':s==='In Progress'?'#d97706':'#16a34a';
-    document.getElementById('ticketsList').innerHTML = data.tickets.reverse().map(t => `
-      <div style="border:1px solid var(--line);border-radius:var(--r-xl);padding:16px;margin-bottom:10px;background:var(--card);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span style="font-size:11px;font-weight:700;color:var(--acc);">${t.TicketID}</span>
-          <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;background:${statusColor(t.Status)}22;color:${statusColor(t.Status)};border:1px solid ${statusColor(t.Status)}44;">${t.Status}</span>
-        </div>
-        <div style="font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px;">${t.Subject}</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">${t.Timestamp} · ${t.Department} · ${t.Priority}</div>
-        ${t['Temp Response'] ? `<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r-md);padding:10px 12px;font-size:12px;color:#92400e;margin-top:8px;"><strong>Owner Response:</strong> ${t['Temp Response']}</div>` : ''}
-        ${t['Final Response'] ? `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--r-md);padding:10px 12px;font-size:12px;color:#15803d;margin-top:6px;"><strong>Final Solution:</strong> ${t['Final Response']}</div>` : ''}
-      </div>
-    `).join('');
+    allTickets = data.tickets || [];
+    filterTickets();
   } catch(err) {
-    document.getElementById('ticketsList').innerHTML = '<p style="color:red;font-size:12px;">Error loading tickets.</p>';
+    document.getElementById('ticketListPane').innerHTML = '<p style="font-size:11px;color:red;padding:12px;">Error loading.</p>';
   }
 }
 
-async function submitQuery() {
-  const name = document.getElementById('qName').value.trim();
-  const dept = document.getElementById('qDept').value;
-  const priority = document.querySelector('input[name="qPriority"]:checked')?.value;
-  const subject = document.getElementById('qSubject').value.trim();
-  const desc = document.getElementById('qDesc').value.trim();
-  const msg = document.getElementById('qMsg');
-  const btn = document.getElementById('qSubmitBtn');
-
-  if (!name || !dept || !subject || !desc) {
-    msg.style.color = '#dc2626';
-    msg.textContent = '⚠️ Sab fields fill karo.';
+function filterTickets() {
+  const filter = document.getElementById('statusFilter')?.value || '';
+  const filtered = filter ? allTickets.filter(t => t.Status === filter) : allTickets;
+  const pane = document.getElementById('ticketListPane');
+  if (!filtered.length) {
+    pane.innerHTML = '<p style="font-size:11px;color:var(--muted);padding:12px;text-align:center;">Koi query nahi</p>';
     return;
   }
+  const priorityDot = p => p==='Urgent'?'#dc2626':p==='Medium'?'#d97706':'#94a3b8';
+  const statusBg = s => s==='Open'?'#fef2f2':s==='In Progress'?'#fffbeb':'#f0fdf4';
+  const statusColor = s => s==='Open'?'#dc2626':s==='In Progress'?'#d97706':'#16a34a';
 
-  btn.textContent = 'Submitting...';
-  btn.disabled = true;
+  pane.innerHTML = filtered.map(t => `
+    <div onclick="openTicket('${t.TicketID}')" id="titem-${t.TicketID}" style="padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer;transition:.14s;${activeTicket===t.TicketID?'background:var(--acc-lt);':''}">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:${priorityDot(t.Priority)};flex-shrink:0;"></span>
+        <span style="font-size:11px;font-weight:700;color:var(--tx);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.Subject}</span>
+      </div>
+      <div style="font-size:10px;color:var(--muted);">${t['Employee Name']} · ${t.Department}</div>
+      <div style="margin-top:5px;">
+        <span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;background:${statusBg(t.Status)};color:${statusColor(t.Status)};">${t.Status}</span>
+        <span style="font-size:9px;color:var(--soft);margin-left:6px;">${t.TicketID}</span>
+      </div>
+    </div>
+  `).join('');
+}
 
-  try {
-    const res = await fetch(GAS_QUERY_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'submitQuery', employeeName: name, department: dept, priority, subject, description: desc })
-    });
-    const data = await res.json();
-    if (data.success) {
-      msg.style.color = '#16a34a';
-      msg.textContent = `✅ Query submit ho gayi! Ticket ID: ${data.ticketID}`;
-      document.getElementById('qName').value = '';
-      document.getElementById('qDept').value = '';
-      document.getElementById('qSubject').value = '';
-      document.getElementById('qDesc').value = '';
-    } else {
-      msg.style.color = '#dc2626';
-      msg.textContent = '❌ Error aaya. Dobara try karo.';
-    }
-  } catch(err) {
-    msg.style.color = '#dc2626';
-    msg.textContent = '❌ Network error. GAS URL check karo.';
+function openTicket(ticketID) {
+  activeTicket = ticketID;
+  const t = allTickets.find(x => x.TicketID === ticketID);
+  if (!t) return;
+
+  // Highlight selected
+  document.querySelectorAll('[id^="titem-"]').forEach(el => el.style.background = '');
+  const el = document.getElementById('titem-' + ticketID);
+  if (el) el.style.background = 'var(--acc-lt)';
+
+  // Header
+  const statusColor = s => s==='Open'?'#dc2626':s==='In Progress'?'#d97706':'#16a34a';
+  document.getElementById('chatHeader').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--tx);">${t.Subject}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">${t['Employee Name']} · ${t.Department} · ${t.Priority} · ${t.Timestamp}</div>
+      </div>
+      <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;background:${statusColor(t.Status)}22;color:${statusColor(t.Status)};border:1px solid ${statusColor(t.Status)}44;white-space:nowrap;">${t.Status}</span>
+    </div>
+  `;
+
+  // Chat bubbles
+  const chatBody = document.getElementById('chatBody');
+  chatBody.innerHTML = '';
+
+  // Employee message
+  chatBody.innerHTML += bubble('left', t['Employee Name'], t.Description, t.Timestamp, '#eef2ff', '#3730a3');
+
+  // Temp response
+  if (t['Temp Response']) {
+    chatBody.innerHTML += bubble('right', 'Owner', t['Temp Response'], '', '#fffbeb', '#92400e');
   }
 
-  btn.textContent = 'Submit Query';
-  btn.disabled = false;
+  // Final response
+  if (t['Final Response']) {
+    chatBody.innerHTML += bubble('right', 'Owner (Final)', t['Final Response'], t['Closed Date'], '#f0fdf4', '#15803d');
+  }
+
+  // Closed message
+  if (t.Status === 'Closed') {
+    chatBody.innerHTML += `<div style="text-align:center;font-size:11px;color:var(--muted);padding:8px;">✅ Ticket closed — ${t['Closed Date']}</div>`;
+    document.getElementById('chatFooter').style.display = 'none';
+  } else {
+    document.getElementById('chatFooter').style.display = 'block';
+  }
+
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function bubble(side, name, text, time, bg, color) {
+  const isRight = side === 'right';
+  return `
+    <div style="display:flex;flex-direction:column;align-items:${isRight?'flex-end':'flex-start'};">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:3px;${isRight?'text-align:right':''}">${name}</div>
+      <div style="max-width:80%;padding:10px 14px;border-radius:${isRight?'14px 14px 4px 14px':'14px 14px 14px 4px'};background:${bg};color:${color};font-size:12.5px;line-height:1.55;font-weight:500;">${text}</div>
+      ${time ? `<div style="font-size:10px;color:var(--soft);margin-top:3px;">${time}</div>` : ''}
+    </div>
+  `;
+}
+
+async function sendResponse(type) {
+  const reply = document.getElementById('ownerReply').value.trim();
+  if (!reply) return;
+  if (!activeTicket) return;
+
+  const payload = { action: 'respondTicket', ticketID: activeTicket };
+  if (type === 'temp') {
+    payload.tempResponse = reply;
+    payload.status = 'In Progress';
+  } else {
+    payload.finalResponse = reply;
+    payload.status = 'Closed';
+  }
+
+  try {
+    await fetch(GAS_QUERY_URL, { method: 'POST', body: JSON.stringify(payload) });
+    document.getElementById('ownerReply').value = '';
+    await loadAllTickets();
+    openTicket(activeTicket);
+  } catch(err) {
+    alert('Error sending response.');
+  }
+}
+
+async function changeStatus(status) {
+  if (!activeTicket) return;
+  try {
+    await fetch(GAS_QUERY_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'respondTicket', ticketID: activeTicket, status })
+    });
+    await loadAllTickets();
+    openTicket(activeTicket);
+  } catch(err) {
+    alert('Error updating status.');
+  }
 }
