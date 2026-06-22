@@ -347,14 +347,20 @@ function renderQuerySection() {
           <p style="font-size:12px;color:var(--muted);text-align:center;">← Query select karo</p>
         </div>
         <div id="chatBody" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;"></div>
-        <div id="chatFooter" style="border-top:1px solid var(--line);padding:12px;display:none;">
-          <textarea id="ownerReply" rows="2" onkeydown="handleReplyKey(event)" placeholder="Response likho... (Shift+Enter = New Line)" style="width:100%;padding:8px 12px;border:1px solid var(--line2);border-radius:8px;font-size:13px;font-family:inherit;outline:none;resize:none;background:var(--bg);"></textarea>
-          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-            <button onclick="sendResponse('temp')" style="background:#d97706;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">Send Temp Response</button>
-            <button onclick="sendResponse('final')" style="background:#16a34a;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">✓ Final Solution & Close</button>
-            <button onclick="changeStatus('In Progress')" style="background:var(--bg);color:var(--tx2);border:1px solid var(--line2);padding:7px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;">Mark In Progress</button>
-          </div>
-        </div>
+        <div id="chatFooter" style="border-top:1px solid var(--line);padding:12px 16px;display:none;background:var(--card);">
+  <div style="display:flex;gap:10px;align-items:flex-end;">
+    <textarea id="ownerReply" rows="2" onkeydown="handleReplyKey(event)" placeholder="Response likho... (Shift+Enter = New Line)" style="flex:1;padding:10px 14px;border:1px solid var(--line2);border-radius:10px;font-size:13px;font-family:inherit;outline:none;resize:none;background:var(--bg);color:var(--tx);transition:border-color .14s;" onfocus="this.style.borderColor='var(--acc)'" onblur="this.style.borderColor='var(--line2)'"></textarea>
+    <button onclick="sendResponse('temp')" style="height:42px;padding:0 18px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.14s;" onmouseover="this.style.background='var(--acc2)'" onmouseout="this.style.background='var(--acc)'">Send ↑</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+    <span style="font-size:11px;font-weight:600;color:var(--muted);">Stage:</span>
+    <div style="display:flex;gap:6px;">
+      <button onclick="changeStatus('Open')" id="stageOpen" style="padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid #fecaca;background:#fef2f2;color:#dc2626;transition:.14s;">Open</button>
+      <button onclick="changeStatus('In Progress')" id="stageInProgress" style="padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid #fde68a;background:#fffbeb;color:#d97706;transition:.14s;">In Progress</button>
+      <button onclick="changeStatus('Closed')" id="stageClosed" style="padding:5px 12px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid #bbf7d0;background:#f0fdf4;color:#16a34a;transition:.14s;">✓ Close</button>
+    </div>
+  </div>
+</div>
       </div>
 
     </div>
