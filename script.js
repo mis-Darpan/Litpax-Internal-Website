@@ -1,4 +1,4 @@
-const GAS_QUERY_URL = 'https://script.google.com/macros/s/AKfycbxI5AttbVyC0XeUnWIo3t9hfN9limnPbpQJQyuJEsAyRVFyOv10gxcsz3K_SqTo-pyO/exec';
+const GAS_QUERY_URL = 'https://script.google.com/macros/s/AKfycbyFAWKfDPr2UJje8zReSKnSf_exAq9EbToY30c7hkNQRDm2UKowlU84Nv6mA91w09U6/exec';
 
 const DATA = {
   forms: [
