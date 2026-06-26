@@ -109,6 +109,10 @@ const DATA = {
     ['Battery Exchange Tracker Response','Response Sheet','https://docs.google.com/spreadsheets/d/1-DUrqY-3BP9QH0BTzt45OPjBbeFR-WFGQWYz5jLkrCQ/edit?gid=1758123938#gid=1758123938']
   ],
 
+    departmentsHub: [
+    ['Litpax Departments Hub','Department-wise employee portal — forms, notices and resources','https://mis-darpan.github.io/Litpax-Departments-Hub/','🏢']
+  ],
+
   charts: {
     payments: {
       groups: [
@@ -233,6 +237,7 @@ function render(){
   setHTML('checklistGrid',   DATA.checklist.map(featureCard).join(''));
   setHTML('fmsGrid',         DATA.fms.map(featureCard).join(''));
   setHTML('erpGrid',         DATA.erp.map(featureCard).join(''));
+  setHTML('departmentsHubGrid', DATA.departmentsHub.map(featureCard).join(''));
   setHTML('repairFormsGrid',     DATA.repairForms.map(featureCard).join(''));
   setHTML('repairSheetsGrid',    DATA.repairSheets.map(toolCard).join(''));
   setHTML('repairResponsesGrid', DATA.repairResponses.map(toolCard).join(''));
