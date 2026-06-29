@@ -97,7 +97,8 @@ const DATA = {
   repairResponses: [
     ['Litpax Support Ticket Response','Response Sheet','https://docs.google.com/spreadsheets/d/1L_XvlvqsjRJ6sDXxABkb8RITGzrtRcth9xtZWuuMpJ8/edit?gid=0#gid=0'],
     ['Repair Sheet','Google Sheet','https://docs.google.com/spreadsheets/d/1ythER3lvxeUS-ke6h_KC-1l8855sQQuiiZ4eQ2BzE5M/edit?gid=0#gid=0'],
-    ['Service Sheet','Google Sheet','https://docs.google.com/spreadsheets/d/1POqxaWq3v1nk0mZF0-e7KhKrHbX_AlMWqUewk17tm0s/edit?gid=2116141456#gid=2116141456']
+    ['Service Sheet','Google Sheet','https://docs.google.com/spreadsheets/d/1POqxaWq3v1nk0mZF0-e7KhKrHbX_AlMWqUewk17tm0s/edit?gid=2116141456#gid=2116141456'],
+    ['Battery Exchange Tracker Admin','Battery exchange records and tracking system','https://mis-darpan.github.io/Battery-Exchange-Tracker/admin.html','↗']
     
   ],
 
