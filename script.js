@@ -84,7 +84,8 @@ const DATA = {
     ['Production Slip FMS','Production Slip workflow monitoring','https://docs.google.com/spreadsheets/d/1fh6S6G9wwc9sKc4vbQmiFOHQZwa1RhNaYoIo2klo8Hw/edit?gid=1461042224#gid=1461042224','⇄'],
     ['O to D FMS','Order to Delivery workflow monitoring','https://docs.google.com/spreadsheets/d/1Qnz-_Yqtj_GMd2s-z2BBRC9GH89UBBS0vdxLwzRfd-w/edit?gid=0#gid=0','⇄'],
     ['Repair Dispatch Builty FMS','Repair Battery Dispatch Builty Tracking','https://docs.google.com/spreadsheets/d/189QqwxMvyzv6UTXJtDbOsPEHF7sFonn_ognI7nHr-Ns/edit?gid=278647415#gid=278647415','⇄'],
-    ['PO FMS','PO Tracking','https://docs.google.com/spreadsheets/d/1anNUF8L_dNgVKQm58zaFf3TqdBB8conrThHLRObbZxY/edit?gid=0#gid=0','⇄']
+    ['PO FMS','PO Tracking','https://docs.google.com/spreadsheets/d/1anNUF8L_dNgVKQm58zaFf3TqdBB8conrThHLRObbZxY/edit?gid=0#gid=0','⇄'],
+    ['Litpax Staff Queries FMS','Queries Tracking','https://docs.google.com/spreadsheets/d/1jkjBCS-lSfk9GNAZeOTptb_tM_EWgFXde3UWQsF-VSo/edit?gid=1837382195#gid=1837382195','⇄']
   ],
 
   repairForms: [
