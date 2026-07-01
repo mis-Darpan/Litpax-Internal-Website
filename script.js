@@ -16,7 +16,7 @@ const DATA = {
     ['Supplier Payment Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSc4jcqRYbXsD0TT8x9BtdJu9G4ynwEIzCyDh9TFBfW_b13aAQ/viewform?usp=dialog'],
     ['Advance Replacement Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSfiO6fVHtltr_TaTHRnXBpogCO54KOOTnb7UCZ-lhMIEGj4bw/viewform?usp=dialog'],
     ['Interviewer Entry Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSfl0frLQf-VXYRL07LkLFbrJxVXAxhw0AKOaCG3OMxeb3APvQ/viewform?usp=dialog'],
-    ['Employee Advance Request Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSdY-1dRa1MPec6_YPvR_nBHMLmMLRkxqzWZFMb_ilRtwxqwpQ/viewform'],
+    ['Employee Advance Request Form','Google Form','https://litpax-technology.github.io/Employee-Advance/'],
     ['Material Gatepass Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSfDuPg5YMG1O-nGmNu2Cl63RvNDmSssQATpbOYn5rXGQ3xVjg/viewform'],
     ['External Material Request Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSdFrEg4I_-qCWy09zz3_03qYJpvsyZBKwuyCRSHUkR1dY79aA/viewform'],
     ['Delivery Challan Creation Form','Google Form','https://docs.google.com/forms/d/e/1FAIpQLSdYlpdg4pfcmvpYrTAjLlXHrldDgwdY_sTwxf_G_DIGFMxNFA/viewform']
