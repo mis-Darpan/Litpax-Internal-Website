@@ -23,16 +23,16 @@ const DATA = {
   ],
 
   erp: [
-    ['Litpax ERP','Order to delivery ERP system','https://mis-darpan.github.io/LitpaxERP/index.html','↗'],
+    ['Litpax ERP','Order to delivery ERP system','https://litpax-technology.github.io/LitpaxERP/index.html','↗'],
   ],
 
   webForms: [
-    ['Field Service Support','Raise technician support tickets and field service requests','https://mis-darpan.github.io/litpax-support-ticket-system/','↗'],
-    ['Repair Form','Create and manage repair related requests','https://mis-darpan.github.io/repairformlitpax/','↗'],
-    ['Service Calls Form','Manage service requests, complaints and support entries','https://mis-darpan.github.io/ServiceCallsWebForm/','↗'],
-    ['Dealership Enquiry Form','Submit dealership and distributor partnership enquiries','https://mis-darpan.github.io/Dealership-Agreement-Web-Form/','↗'],
-    ['Scrap Clearance Form','Scrap material clearance and disposal form','https://mis-darpan.github.io/Scrap-Clearance-Form/','↗'],
-    ['Battery Exchange Tracker','Battery exchange records and tracking system','https://mis-darpan.github.io/Battery-Exchange-Tracker/','↗']
+    ['Field Service Support','Raise technician support tickets and field service requests','https://litpax-technology.github.io/litpax-support-ticket-system/','↗'],
+    ['Repair Form','Create and manage repair related requests','https://litpax-technology.github.io/repairformlitpax/','↗'],
+    ['Service Calls Form','Manage service requests, complaints and support entries','https://litpax-technology.github.io/ServiceCallsWebForm/','↗'],
+    ['Dealership Enquiry Form','Submit dealership and distributor partnership enquiries','https://litpax-technology.github.io/Dealership-Agreement-Web-Form/','↗'],
+    ['Scrap Clearance Form','Scrap material clearance and disposal form','https://litpax-technology.github.io/Scrap-Clearance-Form/','↗'],
+    ['Battery Exchange Tracker','Battery exchange records and tracking system','https://litpax-technology.github.io/Battery-Exchange-Tracker/','↗']
   ],
 
   mainSheets: [
@@ -69,12 +69,12 @@ const DATA = {
   ],
 
   ims: [
-    ['Inventory Management System','Stock availability, inward/outward material movement and warehouse records','https://mis-darpan.github.io/IMS/','▦']
+    ['Inventory Management System','Stock availability, inward/outward material movement and warehouse records','https://litpax-technology.github.io/IMS/','▦']
   ],
 
   checklist: [
     ['Master Checklist File','Open the main checklist file for daily checking and verification','https://docs.google.com/spreadsheets/d/1ayhBVTC269_vNNSAyiNYD-lAjbRj8xVKm9_AfoCYCkE/edit?gid=2092959791#gid=2092959791','☑'],
-    ['All Checklists with Points','Complete checklist with scoring and points','https://mis-darpan.github.io/All-Checklists/','☑']
+    ['All Checklists with Points','Complete checklist with scoring and points','https://litpax-technology.github.io/All-Checklists/','☑']
   ],
 
   fms: [
@@ -89,10 +89,10 @@ const DATA = {
   ],
 
   repairForms: [
-    ['Field Service Support','Raise technician support tickets and field service requests','https://mis-darpan.github.io/litpax-support-ticket-system/','↗'],
-    ['Repair Form','Create and manage repair related requests','https://mis-darpan.github.io/repairformlitpax/','↗'],
-    ['Service Calls Form','Manage service requests, complaints and support entries','https://mis-darpan.github.io/ServiceCallsWebForm/','↗'],
-    ['Battery Exchange Tracker','Battery exchange records and tracking system','https://mis-darpan.github.io/Battery-Exchange-Tracker/','↗']
+    ['Field Service Support','Raise technician support tickets and field service requests','https://litpax-technology.github.io/litpax-support-ticket-system/','↗'],
+    ['Repair Form','Create and manage repair related requests','https://litpax-technology.github.io/repairformlitpax/','↗'],
+    ['Service Calls Form','Manage service requests, complaints and support entries','https://litpax-technology.github.io/ServiceCallsWebForm/','↗'],
+    ['Battery Exchange Tracker','Battery exchange records and tracking system','https://litpax-technology.github.io/Battery-Exchange-Tracker/','↗']
   ],
 
    
@@ -115,8 +115,8 @@ const DATA = {
   ],
 
     departmentsHub: [
-    ['Litpax Departments Hub','Department-wise employee portal — forms, notices and resources','https://mis-darpan.github.io/Litpax-Departments-Hub/','🏢'],
-    ['Departments Hub Admin','Admin panel — manage departments, forms and notices','https://mis-darpan.github.io/Litpax-Departments-Hub/admin.html','⚙️']
+    ['Litpax Departments Hub','Department-wise employee portal — forms, notices and resources','https://litpax-technology.github.io/Litpax-Departments-Hub/','🏢'],
+    ['Departments Hub Admin','Admin panel — manage departments, forms and notices','https://litpax-technology.github.io/Litpax-Departments-Hub/admin.html','⚙️']
   ],
 
   charts: {
